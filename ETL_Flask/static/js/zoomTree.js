@@ -1,5 +1,4 @@
-console.log(data)
-
+console.log(dataZT)
 
 
 //     d3.csv("./assets/data/data.csv").then(function(newsData) {

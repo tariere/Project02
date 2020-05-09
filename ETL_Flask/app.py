@@ -52,6 +52,18 @@ def welcome():
     # Create a dictionary from the row data and append to a list of all_airbnbs    
     return render_template("index.html", data=json.dumps(results, default = myconverter))
 
+@app.route("/zoomTree")
+def zoomTree():
+#  Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of airbnb data including all columns"""
+    # Query all airbnb
+    results_zoomTree = session.query(airbnb.neighbourhood_group, airbnb.neighbourhood, airbnb.latitude, airbnb.longitude, airbnb.room_type, airbnb.price, airbnb.minimum_nights, airbnb.number_of_reviews, airbnb.availability_365).all()
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_airbnbs    
+    return render_template("test.html", data=json.dumps(results_zoomTree, default = myconverter))
 
 
     
