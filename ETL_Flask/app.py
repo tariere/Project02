@@ -47,21 +47,21 @@ def welcome():
     all_airbnb = []
     for entry_id, name, host_id, neighbourhood_group, neighbourhood, latitude, longitude, room_type, price, minimum_nights, number_of_reviews, last_review, reviews_per_month, calculated_host_listings_count, availability_365 in results:
         airbnb_dict = {}
-        airbnb_dict["entry_id"] = name
-        airbnb_dict["name"] = age
-        airbnb_dict["host_id"] = sex
-        airbnb_dict["neighbourhood_group"] = name
-        airbnb_dict["neighbourhood"] = age
-        airbnb_dict["latitude"] = sex
-        airbnb_dict["longitude"] = name
-        airbnb_dict["room_type"] = age
-        airbnb_dict["price"] = sex
-        airbnb_dict["minimum_nights"] = name
-        airbnb_dict["number_of_reviews"] = age
-        airbnb_dict["last_review"] = sex
-        airbnb_dict["reviews_per_month"] = name
-        airbnb_dict["calculated_host_listings_count"] = age
-        airbnb_dict["availability_365"] = sex
+        airbnb_dict["entry_id"] = entry_id
+        airbnb_dict["name"] = name
+        airbnb_dict["host_id"] = host_id
+        airbnb_dict["neighbourhood_group"] = neighbourhood_group
+        airbnb_dict["neighbourhood"] = neighbourhood
+        airbnb_dict["latitude"] = latitude
+        airbnb_dict["longitude"] = longitude
+        airbnb_dict["room_type"] = room_type
+        airbnb_dict["price"] = price
+        airbnb_dict["minimum_nights"] = minimum_nights
+        airbnb_dict["number_of_reviews"] = number_of_reviews
+        airbnb_dict["last_review"] = last_review
+        airbnb_dict["reviews_per_month"] = reviews_per_month
+        airbnb_dict["calculated_host_listings_count"] = calculated_host_listings_count
+        airbnb_dict["availability_365"] = availability_365
         all_airbnb.append(airbnb_dict)
 
     data = jsonify(all_airbnb)
