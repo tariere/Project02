@@ -32,14 +32,49 @@ app = Flask(__name__)
 # Flask Routes
 #################################################
 
-# @app.route("/")
-# def welcome():
-#     """List all available api routes."""
-#     return (
-#         f"Available Routes:<br/>"
-#         f"/api/v1.0/names<br/>"
-#         f"/api/v1.0/passengers"
-#     )
+@app.route("/")
+def welcome():
+ Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of airbnb data including all columns"""
+    # Query all airbnb
+    results = session.query(airbnb.entry_id, airbnb.name, airbnb.host_id, airbnb.neighbourhood_group, airbnb.neighbourhood, airbnb.latitude, airbnb.longitude, airbnb.room_type, airbnb.price, airbnb.minimum_nights, airbnb.number_of_reviews, airbnb.last_review, airbnb.reviews_per_month, airbnb.calculated_host_listings_count, airbnb.availability_365).all()
+
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_airbnbs
+    all_airbnb = []
+    for entry_id, name, host_id, neighbourhood_group, neighbourhood, latitude, longitude, room_type, price, minimum_nights, number_of_reviews, last_review, reviews_per_month, calculated_host_listings_count, availability_365 in results:
+        airbnb_dict = {}
+        airbnb_dict["entry_id"] = name
+        airbnb_dict["name"] = age
+        airbnb_dict["host_id"] = sex
+        airbnb_dict["neighbourhood_group"] = name
+        airbnb_dict["neighbourhood"] = age
+        airbnb_dict["latitude"] = sex
+        airbnb_dict["longitude"] = name
+        airbnb_dict["room_type"] = age
+        airbnb_dict["price"] = sex
+        airbnb_dict["minimum_nights"] = name
+        airbnb_dict["number_of_reviews"] = age
+        airbnb_dict["last_review"] = sex
+        airbnb_dict["reviews_per_month"] = name
+        airbnb_dict["calculated_host_listings_count"] = age
+        airbnb_dict["availability_365"] = sex
+        all_airbnb.append(airbnb_dict)
+
+    data = jsonify(all_airbnb)
+
+    return render_template("index.html", data=data)
+
+
+
+
+    
+
+    
+
 
 
 # @app.route("/api/v1.0/names")
@@ -82,5 +117,5 @@ app = Flask(__name__)
 #     return jsonify(all_passengers)
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
