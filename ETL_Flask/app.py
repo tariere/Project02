@@ -1,4 +1,6 @@
 import numpy as np
+import csv
+import pandas as pd
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -29,6 +31,7 @@ Base.prepare(engine, reflect=True)
 # Save reference to the table
 airbnb = Base.classes.airbnb_db
 
+
 #################################################
 # Flask Setup
 #################################################
@@ -57,60 +60,50 @@ def zoomTree():
 #  Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of airbnb data including all columns"""
-    # Query all airbnb
-    results_zoomTree = session.query(airbnb.neighbourhood_group, airbnb.neighbourhood, airbnb.latitude, airbnb.longitude, airbnb.room_type, airbnb.price, airbnb.minimum_nights, airbnb.number_of_reviews, airbnb.availability_365).all()
+    # """Return a list of airbnb data including all columns"""
+    # # Query all airbnb
+    results_zoomTree = session.query(airbnb.neighbourhood_group, airbnb.neighbourhood, airbnb.room_type, airbnb.price, airbnb.latitude, airbnb.longitude).all()
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_airbnbs    
-    return render_template("test.html", data=json.dumps(results_zoomTree, default = myconverter))
+    # Create a dictionary from the row data and append to a list of all_airbnbs  
 
+    all_listings = []
+    for borough, neighborhood, roomType, price, latitude, longitude in results_zoomTree:
+        airbnb_dict = {}
+        airbnb_dict["neighborhood_group"] = borough
+        airbnb_dict["neighborhood"] = neighborhood
+        airbnb_dict["room_type"] = roomType
+        airbnb_dict["price"] = price
+        airbnb_dict["latitude"] = latitude
+        airbnb_dict["longitude"] = longitude
+        all_listings.append(airbnb_dict)
 
-    
+    return render_template("test.html", data=json.dumps(all_listings, default = myconverter))
 
-    
-
-
-
-# @app.route("/api/v1.0/names")
-# def names():
-#     # Create our session (link) from Python to the DB
-#     session = Session(engine)
-
-#     """Return a list of all passenger names"""
-#     # Query all passengers
-#     results = session.query(Passenger.name).all()
-
-#     session.close()
-
-#     # Convert list of tuples into normal list
-#     all_names = list(np.ravel(results))
-
-#     return jsonify(all_names)
-
-
-# @app.route("/api/v1.0/passengers")
-# def passengers():
-#     # Create our session (link) from Python to the DB
-#     session = Session(engine)
-
-#     """Return a list of passenger data including the name, age, and sex of each passenger"""
-#     # Query all passengers
-#     results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
-
-#     session.close()
-
-#     # Create a dictionary from the row data and append to a list of all_passengers
-#     all_passengers = []
-#     for name, age, sex in results:
-#         passenger_dict = {}
-#         passenger_dict["name"] = name
-#         passenger_dict["age"] = age
-#         passenger_dict["sex"] = sex
-#         all_passengers.append(passenger_dict)
-
-#     return jsonify(all_passengers)
-
+    # with open('Resources/airbnb_df_clean.csv', "r", encoding="utf-8") as csv_file:
+    #     data = csv.reader(csv_file, delimiter=',')
+    #     first_line = True
+    #     listings = []
+    #     for row in data:
+    #         if not first_line:
+    #             listings.append({
+    #             "entry_id": row[0],
+    #             "host_id": row[2],
+    #             "neighborhood_group": row[3],
+    #             "neighborhood": row[4],
+    #             "latitude": row[5],
+    #             "longitude": row[6],
+    #             "room_type": row[7],
+    #             "price": row[8],
+    #             "minimum_nights": row[9],
+    #             "number_of_reviews": row[10],
+    #             "reviews_per_month": row[12],
+    #             "calculated_host_listings_count": row[13],
+    #             "availability_365": row[14]
+    #             })
+    #         else:
+    #             first_line = False
+    # return render_template("test.html", listings=listings)
 
 if __name__ == '__main__':
     app.run(debug=True)
