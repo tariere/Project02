@@ -1,0 +1,21 @@
+
+.jumbotron{
+    background: url('../Resources/Images/NYC-night.jpg');
+}
+.col-sm-4{
+    color: black;
+}
+.card{
+    padding: 5px 5px 5px 5px;
+    opacity:0.7;
+}
+.site-footer{
+    background-color: rgb(56, 55, 55);
+    margin-top: -32px;
+    padding-top: 10px;
+    color: whitesmoke;
+}
+.copyright-text{
+    text-align: center;
+}
+
