@@ -1,5 +1,5 @@
 
-.jumbotron{
+#index_page{
     background: url('../Resources/Images/NYC-night.jpg');
 }
 
@@ -19,4 +19,46 @@
 .copyright-text{
     text-align: center;
 }
+.node {
+    cursor: pointer;
+  }
+.node:hover {
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
+.node--leaf {
+    fill: white;
+  }
+.label{
+    font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  }
+.label--leaf{
+    font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  }
+.label,
+.node--root {
+    pointer-events: none
+  }
+.node--leaf {
+    pointer-events: visibleFill
+  }
+.tooltip {
+    display: block;
+    position: absolute;
+    padding: 2px;
+    font: 12px sans-serif;
+    text-align: center;
+    background: purple;
+    border: 0;
+    border-radius: 10px;
+  }
+
+
+
+
+
 
