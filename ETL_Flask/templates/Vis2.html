@@ -5,32 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>NYC Airbnb</title>
+  <title>Financial Plot</title>
   <!-- bootstrap  -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="../static/style.css" />
   <script>
-    var data = JSON.parse({{ data|tojson }});
+    var air_data = JSON.parse({{ data|tojson }});
   </script>
+
+  <!-- vis 2 -->
+  <script src="{{ url_for('static', filename='js/raphael.js')}}"></script>
+
+
+  <script src="{{ url_for('static', filename='js/tui-chart.js')}}"></script>
+
+   <!-- bottom 2 links for the interactivity of the graph -->
+   <link rel="stylesheet" href="https://uicdn.toast.com/tui.chart/latest/tui-chart.min.css">
+
+  <script src="https://uicdn.toast.com/tui.chart/latest/tui-chart.min.js"></script>
+   
+   <script defer src="{{ url_for('static', filename='js/barGraphData.js') }}"></script>  
+
+  <script src="https://unpkg.com/simple-statistics@5.0.0/dist/simple-statistics.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.7/d3.min.js"></script>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>  
+  <!-- vis2 -->
+
   <link rel="stylesheet" href="bootstrap.min.css">
   <script src="https://unpkg.com/simple-statistics@5.0.0/dist/simple-statistics.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.7/d3.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <!-- <script defer src="{{ url_for('static', filename='js/zoomTree.js') }}"></script> -->
+  
+  <style>
+    body {
+      background-color:rgb(185, 185, 185);
+    }
+  </style>
 
 </head>
 <body>
   <!-- navbar  -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="index.html">Airbnb NYC</a>
+      <a class="navbar-brand" href="/">Airbnb NYC</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="Vis1.html">Visualization #1 <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="map_viz.html">Visualization #1 <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="Vis2.html">Visualization #2</a>
@@ -50,13 +76,9 @@
               <script src=""></script>
               
             </div>
+            <div id="chart-area"></div>
             <div class="col-sm-4">
-                <div class="card">
-                  <div class="card-bdoy">
-                      <h2 class="display-4">Visualization #2</h2>
-                      <p class="lead">Description #1</p>
-                      <p>Description #2</p>
-                  </div>
+              
                 </div>
               </div>
             </div>
@@ -81,10 +103,10 @@
           <div class="col-xs-6 col-md-3">
             <h6>Quick Links</h6>
             <ul class="footer-links">
-              <li><a href="../templates/index.html">About Us</a></li>
-              <li><a href="../templates/Vis1.html">Visualization #1</a></li>
-              <li><a href="../templates/Vis2.html">Visualization #2</a></li>
-              <li><a href="../templates/Vis3.html">Visualization #3</a></li>
+              <li><a href="/">About Us</a></li>
+              <li><a href="map_viz.html">Visualization #1</a></li>
+              <li><a href="Vis2.html">Visualization #2</a></li>
+              <li><a href="Vis3.html">Visualization #3</a></li>
             </ul>
           </div>
         </div>

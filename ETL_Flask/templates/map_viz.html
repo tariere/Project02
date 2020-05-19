@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Filtering Listings</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+<!-- bootstrap  -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="bootstrap.min.css">
+<script src="https://unpkg.com/simple-statistics@5.0.0/dist/simple-statistics.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.7/d3.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<style>
+  body { margin:0; padding:10;  }
+  #map { position:relative; top:50; bottom:0; height:800px; width:100%;}
+</style>
+</head>
+<body>
+
+<!-- navbar  -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Airbnb NYC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="../templates/map_viz.html">Visualization #1 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../templates/Vis2.html">Visualization #2</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../templates/Vis3.html">Visualization #3</a>
+        </li>
+        </ul>
+    </div>
+</nav>
+
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+<style>
+#room_types {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #fff;
+    width: 150px;
+    padding:5px;
+}
+</style>
+<div id='map'></div>
+<form id='room_types'>
+  <div><input type='checkbox' name='filters' onclick='showListings();' value='Private room' checked> Private Room</div>
+  <div><input type='checkbox' name='filters' onclick='showListings();' value='Shared room' checked> Shared Room</div>
+  <div><input type='checkbox' name='filters' onclick='showListings();' value='Entire home/apt' checked> Entire Home/Apt</div>
+</form>
+<script>
+  L.mapbox.accessToken = 'pk.eyJ1IjoibGVvcmFtaXJleiIsImEiOiJjazlqN3dkYWowYWZiM2VsNmdsYWhyeHNxIn0.iXzuaJobg9q7cVQ-3FSrAg';
+  // Here we don't use the second argument to map, since that would automatically
+  // load in non-clustered markers from the layer. Instead we add just the
+  // backing styleLayer, and then use the featureLayer only for its data.
+  var map = L.mapbox.map('map')
+      .setView([40.73, -74.0059], 13)
+      .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+  
+  var overlays = L.layerGroup().addTo(map);
+  
+  // we create the 'layers' variable outside of the on('ready' callback
+  // so that it can be accessible in the showStations function. Otherwise,
+  // JavaScript scope would prevent you from accessing it.
+  var layers;
+  
+  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
+  // call to only use its marker data once we know it is actually loaded.
+  L.mapbox.featureLayer()
+      .loadURL('airbnb_listings.geojson')
+      .on('ready', function(e) {
+          layers = e.target;
+          showListings();
+      });
+  
+  var filters = document.getElementById('room_types').filters;
+  
+  // There are many ways to filter data. Mapbox.js has the .setFilter method,
+  // but it only applies to L.mapbox.featureLayer layers, and that isn't what
+  // we're creating - we're making marker groups in a MarkerClusterGroup layer.
+  // Thus we distill filtering down to its essential part: an 'if' statement
+  // in a loop.
+  function showListings() {
+      // first collect all of the checked boxes and create an array of strings
+      // like ['green', 'blue']
+      var list = [];
+      for (var i = 0; i < filters.length; i++) {
+          if (filters[i].checked) list.push(filters[i].value);
+      }
+      // then remove any previously-displayed marker groups
+      overlays.clearLayers();
+
+      //Create baseURL to reference listing if wanted
+      var baseURL = "https://www.airbnb.com/rooms/"
+      // create a new marker group
+      var clusterGroup = new L.MarkerClusterGroup().addTo(overlays);
+      // and add any markers that fit the filtered criteria to that group.
+      layers.eachLayer(layer => {
+          if (list.indexOf(layer.feature.properties.room_type) !== -1) {
+              clusterGroup.addLayer(layer.bindPopup("<h3>" + layer.feature.properties.room_type + "</h3><hr><p>" + "$"+ layer.feature.properties.price + " per night"+ "<br>"+ "Click here for the listing: " + "<a href=" + baseURL + layer.feature.properties.entry_id + ">Listing<a/>" + "</p>"));
+          }
+      }); 
+      
+    
+};
+
+
+
+  </script>
+  </body>
+  </html>
