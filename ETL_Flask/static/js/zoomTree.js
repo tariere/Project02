@@ -120,7 +120,7 @@ function circlePack(newData) {
   // On click functions for zoom and hyperlink
   svg
     .style("background", color(-1))
-    .on("click", function() {event.target.class === "node--leaf" ? zoom(root) : window.open(event.target.__data__.data.url); });
+    .on("click", function() {event.target.__data__.depth === 4 ? window.open(event.target.__data__.data.url) : zoom(root); });
 
   zoomTo([root.x, root.y, root.r * 2 + margin]);
 
