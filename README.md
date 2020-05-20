@@ -21,4 +21,4 @@ We created a database using AWS and loaded data to it using Postgres.  Once the 
 Kaggle NYC AirBnB Open Data
 * http://example.com/https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data#AB_NYC_2019.csv
 
-&reg;
+Copyright Cantankerous Caninies &reg;2020
