@@ -1,4 +1,5 @@
 # New York, New York - Selecting an AirBnB location in New York City
+![NYC](Resources/ImagesJg14FgM.jpg "New York City)
 
 ### Developers
 ***
