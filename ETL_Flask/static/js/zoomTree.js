@@ -50,7 +50,7 @@ function hierarchy(data) {
 function circlePack(newData) {
 
   //define variables
-  var height = 700
+  var height = 850
   var width = height
 
   //Append svg to chart id in html
@@ -76,7 +76,7 @@ function circlePack(newData) {
 
   // create a tooltip
   var toolTip = d3.select(".row").append("div")
-    .attr("class", "tooltip");
+    .attr("class", "detail-tip");
 
   var root = d3.hierarchy(newData)
       .sum(function(d) { return d.size; })

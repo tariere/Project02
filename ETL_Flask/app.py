@@ -15,6 +15,7 @@ def myconverter(o):
     if isinstance(o, datetime.datetime):
         return o.__str__()
 
+
 #################################################
 # Database Setup
 #################################################
@@ -39,14 +40,22 @@ app = Flask(__name__)
 # Flask Routes
 #################################################
 
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
 @app.route("/map_viz.html")
 def mappage():
-    file = request.files['templates/airbnb_listings.geojson']
+
     return render_template("map_viz.html")
+
+@app.route("/airbnb_listings.geojson")
+def getgeojson():
+    with open("static/data/airbnb_listings.txt", "r", encoding='utf-8') as f:
+        geojson_string = f.read()
+    return geojson_string
 
 @app.route("/Vis2.html")
 def barGraph():
