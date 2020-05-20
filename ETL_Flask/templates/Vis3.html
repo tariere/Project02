@@ -21,7 +21,6 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
   <script defer src="{{ url_for('static', filename='js/zoomTree.js') }}"></script>
-  <link rel="stylesheet" href=".\static\css\style.css">
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <style>
     body {
@@ -41,14 +40,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="map_viz.html">Visualization #1 <span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+              <a class="nav-link" href="map_viz.html">Visualization #1 </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="Vis2.html">Visualization #2</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Vis3.html">Visualization #3</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="Vis3.html">Visualization #3 <span class="sr-only">(current)</span></a>
             </li>
           </ul>
         </div>
@@ -70,10 +69,10 @@
       </div>
 
       <!-- jumbotron -->
-      <div class="jumbotron">
+      <div class="jumbotron text-center">
         <div class="container">
           <div class="row" id="tool-tip-box">
-              <div class="col-sm-8 btn-holder"></div>
+              <div class="col-sm-12 btn-holder"></div>
               <div id="chart"></div>
           </div>
         </div>
@@ -85,7 +84,7 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <h6>About</h6>
-            <p class="text-justify">Airbnb NYC. <i>Your ideal stay in New York. <hr></i>Insert Short Project Desciptions</p>
+            <p class="text-justify">Airbnb NYC. <i>Your ideal stay in New York. <hr></i></p>
           </div>
 
           <div class="col-xs-6 col-md-3">
